@@ -22,6 +22,65 @@ enum layer_names {
 };
 
 
+enum custom_keycodes {
+    KINDRG = SAFE_RANGE,
+    CHEERS,
+    LAYOUT,
+    HSCONFIG,
+    LIBRARY,
+};
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+    case KINDRG:
+        if (record->event.pressed) {
+            // when keycode KINDRG is pressed
+            SEND_STRING("Kind Regards,\n\nTristan.\n");
+        } else {
+            // when keycode KINDRG is released
+        }
+        break;
+
+    case CHEERS:
+        if (record->event.pressed) {
+            // when keycode CHEERS is pressed
+            SEND_STRING("Cheers,\n\nTristan.\n");
+        } else {
+            // when keycode CHEERS is released
+        }
+        break;
+
+    case LAYOUT:
+        if (record->event.pressed) {
+            // when keycode LAYOUT is pressed
+            SEND_STRING(SS_DOWN(X_LCTRL) SS_DOWN(X_LOPT) SS_DOWN(X_LCMD) SS_TAP(X_L) SS_UP(X_LCTRL) SS_UP(X_LOPT) SS_UP(X_LCMD));
+        } else {
+            // when keycode LAYOUT is released
+        }
+        break;
+
+    case HSCONFIG:
+        if (record->event.pressed) {
+            // when keycode HSCONFIG is pressed
+            SEND_STRING(SS_DOWN(X_LCTRL) SS_DOWN(X_LOPT) SS_DOWN(X_LCMD) SS_TAP(X_R) SS_UP(X_LCTRL) SS_UP(X_LOPT) SS_UP(X_LCMD));
+        } else {
+            // when keycode HSCONFIG is released
+        }
+        break;
+
+    case LIBRARY:
+        if (record->event.pressed) {
+            // when keycode LIBRARY is pressed
+            SEND_STRING("library.uq.edu.au");
+        } else {
+            // when keycode LIBRARY is released
+        }
+        break;
+
+    }
+    return true;
+};
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /* Keymap _BASE: (Base Layer) Default Layer
      * ,-------------------.
@@ -38,7 +97,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      */
 
     [_BASE] = LAYOUT_numpad_5x4(
-        KC_NLCK, KC_PSLS, KC_PAST, KC_PMNS,
+        KC_BSPACE, KC_PSLS, KC_PAST, KC_PMNS,
         KC_P7,   KC_P8,   KC_P9,
         KC_P4,   KC_P5,   KC_P6, KC_PPLS,
         KC_P1,   KC_P2,   KC_P3,
@@ -47,7 +106,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     /* Keymap _FN: (Function Layer) 
      * ,---------------------.
-     * |     |     |     |   |
+     * | RESET |     |     |   |
      * |---------------------|
      * | F19 | F20 | F21 |   |
      * |---------------------|
@@ -60,10 +119,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      */
 
     [_FN] = LAYOUT_numpad_5x4(
-        KC_NO,   KC_NO,   KC_NO,  KC_NO,
-        KC_F19,  KC_F20,  KC_F21,
+        RESET,   KC_NO,   KC_NO,  KC_NO,
+        HSCONFIG,  LAYOUT,  KC_NO,
         KC_F16,  KC_F17,  KC_F18, KC_NO,
-        KC_F13,  KC_F14,  KC_F15,
+        KINDRG,  CHEERS,  LIBRARY,
                  KC_NO,   KC_NO,  KC_NO
     )
 
